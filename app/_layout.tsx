@@ -5,18 +5,18 @@ import 'react-native-reanimated';
 
 import { useColorScheme } from '@/hooks/use-color-scheme';
 
-export const unstable_settings = {
-  anchor: '(tabs)',
-};
-
 export default function RootLayout() {
   const colorScheme = useColorScheme();
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
+        <Stack.Screen name="index" options={{ title: 'Setup' }} />
+        <Stack.Screen name="alarm-config" options={{ title: 'Configurer l\'alarme' }} />
+        <Stack.Screen name="alarm-ringing" options={{ title: 'Réveil' }} />
+        <Stack.Screen name="lock" options={{ title: 'Déverrouillage' }} />
+        <Stack.Screen name="morning-flow" options={{ title: 'Morning Flow' }} />
+        <Stack.Screen name="flow-editor" options={{ title: 'Flow Editor' }} />
       </Stack>
       <StatusBar style="auto" />
     </ThemeProvider>
