@@ -8,6 +8,13 @@ export interface UnlockActionConfig {
 
 export type FlowWidgetType = 'WEATHER' | 'TODAY_TASKS' | 'TODAY_PLAN' | 'MOTIVATION';
 
+interface FlowWidgetBase<T extends FlowWidgetType, C> {
+  id: string;
+  type: T;
+  enabled: boolean;
+  config: C;
+}
+
 export interface WeatherWidgetConfig {
   city: string;
 }
@@ -26,18 +33,16 @@ export interface MotivationWidgetConfig {
   category: 'calme' | 'focus' | 'discipline';
 }
 
-export type FlowWidgetConfig =
-  | WeatherWidgetConfig
-  | TasksWidgetConfig
-  | TodayPlanWidgetConfig
-  | MotivationWidgetConfig;
+export type WeatherFlowWidget = FlowWidgetBase<'WEATHER', WeatherWidgetConfig>;
+export type TasksFlowWidget = FlowWidgetBase<'TODAY_TASKS', TasksWidgetConfig>;
+export type TodayPlanFlowWidget = FlowWidgetBase<'TODAY_PLAN', TodayPlanWidgetConfig>;
+export type MotivationFlowWidget = FlowWidgetBase<'MOTIVATION', MotivationWidgetConfig>;
 
-export interface FlowWidget {
-  id: string;
-  type: FlowWidgetType;
-  enabled: boolean;
-  config: FlowWidgetConfig;
-}
+export type FlowWidget =
+  | WeatherFlowWidget
+  | TasksFlowWidget
+  | TodayPlanFlowWidget
+  | MotivationFlowWidget;
 
 export interface Alarm {
   id: string;
