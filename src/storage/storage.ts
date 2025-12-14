@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/no-unresolved
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {
@@ -9,7 +8,7 @@ import {
   TodayPlanWidgetConfig,
   UserSettings,
   WeatherWidgetConfig,
-} from '@/src/types/models';
+} from '../types/models';
 
 const SETTINGS_KEY = '@settings';
 
@@ -57,14 +56,14 @@ export function getDefaultSettings(): UserSettings {
 
 export async function loadSettings(): Promise<UserSettings> {
   const defaultSettings = getDefaultSettings();
-  const storedValue = await AsyncStorage.getItem(SETTINGS_KEY);
-
-  if (!storedValue) {
-    await AsyncStorage.setItem(SETTINGS_KEY, JSON.stringify(defaultSettings));
-    return defaultSettings;
-  }
-
   try {
+    const storedValue = await AsyncStorage.getItem(SETTINGS_KEY);
+
+    if (!storedValue) {
+      await AsyncStorage.setItem(SETTINGS_KEY, JSON.stringify(defaultSettings));
+      return defaultSettings;
+    }
+
     const parsedSettings = JSON.parse(storedValue) as Partial<UserSettings>;
     return {
       ...defaultSettings,
@@ -77,6 +76,7 @@ export async function loadSettings(): Promise<UserSettings> {
     };
   } catch (error) {
     console.warn('Impossible de lire les paramètres, utilisation des valeurs par défaut', error);
+    await AsyncStorage.setItem(SETTINGS_KEY, JSON.stringify(defaultSettings));
     return defaultSettings;
   }
 }
